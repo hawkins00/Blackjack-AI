@@ -11,9 +11,9 @@ public class Main {
     // This is just to make sure the shoe initialized correctly.  Feel free to comment out/delete.
     Deck d = new Deck();
     d.createShoe();
-    System.out.println("Size of shoe: " + d.getShoe().size());
+    System.out.println("Size of shoe: " + d.getShoeSize());
 
-    while (!d.getShoe().isEmpty()) {
+    while (d.getShoeSize() != 0) {
       Card c = d.drawCard();
       System.out.println(c.getRank() + " " + c.getSuit() + " " + c.getValue());
     }

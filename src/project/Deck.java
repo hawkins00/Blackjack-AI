@@ -8,12 +8,7 @@ import java.util.Collections;
  * This class shall utilize the Card class to create and manipulate a BlackJack deck of cards
  */
 public class Deck {
-  public enum Suits {
-    DIAMONDS, HEARTS, SPADES, CLUBS
-  }
-  public enum Ranks {
-    ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-  }
+
   private ArrayList<Card> shoe;
 
   public void createShoe() {
@@ -21,8 +16,8 @@ public class Deck {
 
     // creates 6 decks and shuffles them together before returning the shoe
     for (int i = 0; i < 6; i++) {
-      for (Suits s : Suits.values()) {
-        for (Ranks r : Ranks.values()) {
+      for (Card.Suits s : Card.Suits.values()) {
+        for (Card.Ranks r : Card.Ranks.values()) {
           newShoe.add(new Card(s, r));
         }
       }
@@ -37,7 +32,7 @@ public class Deck {
     return this.shoe.remove(0);
   }
 
-  public ArrayList<Card> getShoe() {
-    return this.shoe;
+  public int getShoeSize() {
+    return this.shoe.size();
   }
 }
