@@ -7,7 +7,15 @@ package src.project;
  */
 public class Main {
 
-    public static void main(String[] args) {
-	// write your code here
+  public static void main(String[] args) {
+    // This is just to make sure the shoe initialized correctly.  Feel free to comment out/delete.
+    Deck d = new Deck();
+    d.createShoe();
+    System.out.println("Size of shoe: " + d.getShoe().size());
+
+    while (!d.getShoe().isEmpty()) {
+      Card c = d.drawCard();
+      System.out.println(c.getRank() + " " + c.getSuit() + " " + c.getValue());
     }
+  }
 }
