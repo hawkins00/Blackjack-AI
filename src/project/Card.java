@@ -4,8 +4,14 @@ package src.project;
  * Created by Zosit on 11/22/2017.
  * This class acts as a card in a typical BlackJack deck
  */
-public class Card extends Object{
+public class Card {
 
+  public enum Suits {
+    DIAMONDS, HEARTS, SPADES, CLUBS
+  }
+  public enum Ranks {
+    ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+  }
 
   private Suits suit;
   private Ranks rank;
@@ -48,6 +54,13 @@ public class Card extends Object{
     else {
       this.value = 10;
     }
+  }
+
+  public boolean isFace() {
+    if(rank == Ranks.TEN || rank == Ranks.JACK || rank == Ranks.QUEEN || rank == Ranks.ACE){
+      return true;
+    }
+    return false;
   }
 
   public Suits getSuit() {

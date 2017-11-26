@@ -8,8 +8,8 @@ import java.util.ArrayList;
  * They should be able to use a Deck class to draw and discard cards from their hand.
  */
 public class Player {
-    private Deck deck;
-    private ArrayList<Card> hand;
+    public Deck deck;
+    public ArrayList<Card> hand;
 
     //For dealer
     public Player() {
