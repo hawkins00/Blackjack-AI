@@ -35,7 +35,7 @@ public class Dealer extends Object{
                 ++faceFlag;
             }
         }
-        if(aceFlag == 1 && faceFlag == 1) {
+        if(((aceFlag + faceFlag) == 2) && aceFlag == 1 && faceFlag == 1) {
             return true;
         }
         return false;
