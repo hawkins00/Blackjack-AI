@@ -6,7 +6,7 @@ The Group Members are: Joshua Sander, Alex Davis, Matt Hawkins, Scott Jones, Dak
 
 Rules for Our Simple BlackJack Game
 
-1. Played with 5 decks of 52 cards
+1. Played with 6 decks of 52 cards
 2. There is one player at a time heads up with one dealer. 
 2. Aces may be counted as 1 or 11 points, 2 to 9 according to pip value, tens and face cards count as ten
 3. The value of a hand is the sum of the point valued of the individual cards, except BlackJack, which is the highest hand, consisting of any 10 point card, and it outranks all other 21 point hands.
