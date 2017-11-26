@@ -4,13 +4,8 @@ package src.project;
  * Created by Zosit on 11/22/2017.
  * This class acts as a card in a typical BlackJack deck
  */
-public class Card {
-  public enum Suits {
-    DIAMONDS, HEARTS, SPADES, CLUBS
-  }
-  public enum Ranks {
-    ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-  }
+public class Card extends Object{
+
 
   private Suits suit;
   private Ranks rank;

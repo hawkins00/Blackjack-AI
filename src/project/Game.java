@@ -9,4 +9,6 @@ package src.project;
  * It should also have functions that return data about the game state,
  */
 public class Game {
+
+    private Deck deck;
 }
