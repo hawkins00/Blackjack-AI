@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * They should be able to use a Deck class to draw and discard cards from their hand.
  */
 public class Player {
-    public Deck deck;
+    private Deck deck;
     public ArrayList<Card> hand;
 
     //For dealer
@@ -39,5 +39,28 @@ public class Player {
 
     public void hit() {
         hand.add(deck.drawCard());
+    }
+
+    public boolean checkForBlackJack(){
+        boolean aceFlag = false;
+        boolean faceFlag = false;
+        Card.Ranks rank;
+        if (hand.size() > 2) {
+            return false;
+        }
+        for(Card card: hand){
+            rank = card.getRank();
+            if(rank == Card.Ranks.ACE){
+                aceFlag = true;
+            }
+            else if(card.isFace()){
+                faceFlag = true;
+            }
+        }
+        if(aceFlag && faceFlag) {
+            return true;
+        }
+
+        return false;
     }
 }
