@@ -11,7 +11,7 @@ package src.project;
 public class Qlearning {
 
     private double[][] q;
-    private static int STATES  = 1024;
+    private static int STATES  = 858 + 1; // 858 = largest legal state # possible (Ace 21 10 = 1 10101 1010);
     private static int ACTIONS = 2; // [0] = stand, [1] = hit
 
     public Qlearning() {
