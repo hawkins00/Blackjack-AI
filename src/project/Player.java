@@ -30,6 +30,25 @@ public class Player {
 
     public ArrayList<Card> getHand() {return hand;}
 
+    public int getHandValue() {
+        int total = 0;
+        for (Card card: this.hand) {
+            total += card.getValue();
+        }
+
+        return total;
+    }
+
+    public boolean isAceInHand() {
+        for (Card card: this.hand) {
+            if (card.getValue() == 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void setHand() {
         hand.add(deck.drawCard());
         hand.add(deck.drawCard());

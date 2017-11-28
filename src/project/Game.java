@@ -15,7 +15,7 @@ public class Game {
     private Deck deck;
     private Player player;
     private Dealer dealer;
-    private Integer winState;
+    private int winState;
 
     //game initialization
     public Game() {
@@ -43,13 +43,19 @@ public class Game {
         return player.getHand();
     }
 
+    public int getPlayerHandValue() { return player.getHandValue(); }
+
+    public boolean isAceInPlayerHand() { return player.isAceInHand(); }
+
     public ArrayList<Card> getDealerHand() {
         return dealer.getHand();
     }
 
     public Card getDealerUpCard() { return dealer.getInitialHand(); }
 
-    public Integer isGameOver() {
+    public int getDealerUpCardValue() { return dealer.getInitialHand().getValue(); }
+
+    public int isGameOver() {
         return winState;
     }
 
