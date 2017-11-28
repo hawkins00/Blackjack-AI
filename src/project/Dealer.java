@@ -29,10 +29,7 @@ public class Dealer extends Player{
         for (Card card: hand){
             pointTotal += card.getValue();
         }
-        if(pointTotal < 17) {
-            return true;
-        }
-        return false;
+        return pointTotal < 17;
     }
 
 }

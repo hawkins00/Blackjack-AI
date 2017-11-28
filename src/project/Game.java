@@ -47,6 +47,8 @@ public class Game {
         return dealer.getHand();
     }
 
+    public Card getDealerUpCard() { return dealer.getInitialHand(); }
+
     public Integer isGameOver() {
         return winState;
     }
