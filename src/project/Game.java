@@ -12,10 +12,17 @@ import java.util.ArrayList;
  */
 public class Game {
 
+    public enum GameState {
+        IN_PROGRESS(0), LOSE(-1), PUSH(0), WIN(1);
+        private final int val;
+        GameState(int val) { this.val = val; }
+        public int value() { return this.val; }
+    }
+
     private Deck deck;
     private Player player;
     private Dealer dealer;
-    private int winState;
+    private GameState gameState;
 
     //game initialization
     public Game() {
@@ -30,11 +37,11 @@ public class Game {
         //test for win state on either side, end game immediately if there is one
         if(dealer.checkForBlackJack()) {
             if(player.checkForBlackJack()) {
-                winState = 1;
+                gameState = GameState.PUSH;
             }
-            winState = -1;
+            gameState = GameState.LOSE;
         } else {
-            winState = 0;
+            gameState = GameState.IN_PROGRESS;
         }
     }
 
@@ -55,8 +62,12 @@ public class Game {
 
     public int getDealerUpCardValue() { return dealer.getInitialHand().getValue(); }
 
-    public int isGameOver() {
-        return winState;
+    public boolean isOver() {
+        return this.gameState != GameState.IN_PROGRESS;
+    }
+
+    public int getScore() {
+        return this.gameState.value();
     }
 
     //Game actions

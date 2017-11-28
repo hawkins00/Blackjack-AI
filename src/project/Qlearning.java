@@ -40,7 +40,7 @@ public class Qlearning {
                 stateAction = q[state][action];
                 q[state][action] = stateAction + eta * (reward + gamma * getActionMaxValue(stateNew) - stateAction);
                 state = stateNew;
-            } while (game.isGameOver() == 0); // account for pushes??? \\
+            } while (!game.isOver());
 
             // Update epsilon value periodically
             if ((i + 1) % epsilonEvery == 0) {
@@ -71,7 +71,7 @@ public class Qlearning {
                 action = getActionMax(state);
                 rewardTotal += takeAction(action, game);
                 state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
-            } while (game.isGameOver() == 0); // account for pushes??? \\
+            } while (!game.isOver());
         }
 
         return rewardTotal / episodes;
@@ -128,6 +128,7 @@ public class Qlearning {
 
     /**
      * Take the supplied action.
+     * @return The value of the action taken.
      */
     private int takeAction(int action, Game game) {
         if (action == 0) {
@@ -136,6 +137,6 @@ public class Qlearning {
             game.hit();
         }
 
-        return game.isGameOver();
+        return game.getScore();
     }
 }
