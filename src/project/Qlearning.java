@@ -11,15 +11,23 @@ package src.project;
 public class Qlearning {
 
     private double[][] q;
-    private static int STATES  = 858 + 1; // 858 = largest legal state # possible (Ace 21 10 = 1 10101 1010);
     private static int ACTIONS = 2; // [0] = stand, [1] = hit
+    private static int STATES  = 858 + 1; // 858 = largest legal state # possible
+                                          //       Ace 21 10 [in decimal] = 1 10101 1010 [in binary]);
 
     public Qlearning() {
         this.q = new double[Qlearning.STATES][Qlearning.ACTIONS];
     }
 
     /**
-     * Train for #episodes.
+     * Train with Q Learning.
+     * @param episodes Number of episodes (games) to play/train.
+     * @param eta Learning rate
+     * @param gamma Gamma value
+     * @param epsilon Initial epsilon value
+     * @param epsilonMin Minimum epsilon value
+     * @param epsilonDelta Amount to change epsilon every epsilonEvery episodes
+     * @param epsilonEvery Number of episodes to train before reducing epsilon by epsilonDelta
      */
     public void train(int episodes, double eta, double gamma, double epsilon, double epsilonMin, double epsilonDelta, int epsilonEvery) {
         int state;
@@ -46,7 +54,8 @@ public class Qlearning {
             if ((i + 1) % epsilonEvery == 0) {
                 if (epsilon > epsilonMin) {
                     epsilon -= epsilonDelta;
-                } else {
+                }
+                if (epsilon < epsilonMin) {
                     epsilon = epsilonMin;
                 }
             }
@@ -55,7 +64,7 @@ public class Qlearning {
 
     /**
      * Test for #episodes. Return win %.
-     *
+     * @param episodes Number of episodes (games) to play
      * @return The win percentage.
      */
     public double test(int episodes) {
@@ -96,7 +105,7 @@ public class Qlearning {
     }
 
     /**
-     * Get an action to take.
+     * Get an epsilon-greedy action to take.
      *
      * @return The an action to take.
      */
@@ -123,7 +132,7 @@ public class Qlearning {
      * @return The best action value.
      */
     private double getActionMaxValue(int state) {
-        return this.q[state][0] > this.q[state][1] ? this.q[state][0] : this.q[state][1];
+        return this.q[state][getActionMax(state)];
     }
 
     /**
