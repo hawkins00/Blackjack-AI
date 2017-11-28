@@ -21,7 +21,7 @@ public class Qlearning {
     /**
      * Train for #episodes.
      */
-    public void train(int episodes, double eta, double gamma, double epsilon, double epsilonMin, double epsilonDelta, double epsilonEvery) {
+    public void train(int episodes, double eta, double gamma, double epsilon, double epsilonMin, double epsilonDelta, int epsilonEvery) {
         int state;
         int stateNew;
         int action;
