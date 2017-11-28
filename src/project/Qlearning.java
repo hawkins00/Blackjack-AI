@@ -11,9 +11,11 @@ package src.project;
 public class Qlearning {
 
     private double[][] q;
+    private static int STATES  = 1024;
+    private static int ACTIONS = 2; // [0] = stand, [1] = hit
 
     public Qlearning() {
-        this.q = new double[1024][2];
+        this.q = new double[Qlearning.STATES][Qlearning.ACTIONS];
     }
 
     /**
@@ -26,20 +28,19 @@ public class Qlearning {
         int reward;
         double stateAction;
 
-        for (int i = 0; i < episodes; ) {  // train for #episodes
+        for (int i = 0; i < episodes; i++) { // train for #episodes
             System.out.println(i);
             Game game = new Game();
             state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
 
-            while (game.isGameOver() == 0) { // account for pushes??? \\
+            do {
                 action = getAction(state, epsilon);
-                reward = takeAction(action);
+                reward = takeAction(action, game);
                 stateNew = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
                 stateAction = q[state][action];
                 q[state][action] = stateAction + eta * (reward + gamma * getActionMaxValue(stateNew) - stateAction);
                 state = stateNew;
-                i++; // only count episode when hand isn't instantly lost (something to learn)
-            }
+            } while (game.isGameOver() == 0); // account for pushes??? \\
 
             // Update epsilon value periodically
             if ((i + 1) % epsilonEvery == 0) {
@@ -49,7 +50,6 @@ public class Qlearning {
                     epsilon = epsilonMin;
                 }
             }
-
         }
     }
 
@@ -59,7 +59,22 @@ public class Qlearning {
      * @return The win percentage.
      */
     public double test(int episodes) {
-        return 0.0;
+        int state;
+        int action;
+        double rewardTotal = 0.0;
+
+        for (int i = 0; i < episodes; i++) {
+            Game game = new Game();
+            state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+
+            do {
+                action = getActionMax(state);
+                rewardTotal += takeAction(action, game);
+                state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+            } while (game.isGameOver() == 0); // account for pushes??? \\
+        }
+
+        return rewardTotal / episodes;
     }
 
     // Private /////////////////////////////////////////////////////////////////
@@ -114,7 +129,13 @@ public class Qlearning {
     /**
      * Take the supplied action.
      */
-    private int takeAction(int action) {
-        return 0;
+    private int takeAction(int action, Game game) {
+        if (action == 0) {
+            game.stand();
+        } else {
+            game.hit();
+        }
+
+        return game.isGameOver();
     }
 }
