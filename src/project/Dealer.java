@@ -1,14 +1,12 @@
 package src.project;
 
-import java.util.ArrayList;
-
 /**
  * Created by scottjones on 11/26/17.
  */
 public class Dealer extends Player{
 
-    public Dealer(Deck deck) {
-        super(deck);
+    public Dealer(Shoe shoe) {
+        super(shoe);
     }
 
 

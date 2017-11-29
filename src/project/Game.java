@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Zosit on 11/22/2017.
  * This will act as the rule manager of a game of blackjack.
- * It should create the deck, player, and dealer.
+ * It should create the shoe, player, and dealer.
  * It should contain functions for an outside source to manipulate the player,
  * with each input heading to the next game state needing player input.
  * It should also have functions that return data about the game state,
@@ -19,20 +19,20 @@ public class Game {
         public int value() { return this.val; }
     }
 
-    private Deck deck;
+    private Shoe shoe;
     private Player player;
     private Dealer dealer;
     private GameState gameState;
 
     //game initialization
     public Game() {
-        deck = new Deck();
-        deck.createShoe();
+        shoe = new Shoe();
+        shoe.createShoe();
 
-        player = new Player(deck);
+        player = new Player(shoe);
         player.setHand();
 
-        dealer = new Dealer(deck);
+        dealer = new Dealer(shoe);
         dealer.setHand();
         //test for win state on either side, end game immediately if there is one
         if(dealer.checkForBlackJack()) {

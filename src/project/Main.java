@@ -9,7 +9,7 @@ public class Main {
 
   public static void main(String[] args) {
     // This is just to make sure the shoe initialized correctly.  Feel free to comment out/delete.
-    Deck d = new Deck();
+    Shoe d = new Shoe();
     d.createShoe();
     System.out.println("Size of shoe: " + d.getShoeSize());
 
