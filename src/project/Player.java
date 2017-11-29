@@ -8,24 +8,10 @@ import java.util.ArrayList;
  * They should be able to use a Shoe class to draw and discard cards from their hand.
  */
 public class Player {
-    private Shoe shoe;
     public ArrayList<Card> hand;
 
-    //For dealer
     public Player() {
-        shoe = new Shoe();
-        shoe.createShoe();
         hand = new ArrayList<>();
-    }
-
-    //For player
-    public Player(Shoe toShoe) {
-        shoe = toShoe;
-        hand = new ArrayList<>();
-    }
-
-    public void resetShoe() {
-        shoe.createShoe();
     }
 
     public ArrayList<Card> getHand() {return hand;}
@@ -49,27 +35,27 @@ public class Player {
         return false;
     }
 
-    public void setHand() {
-        hand.add(shoe.drawCard());
-        hand.add(shoe.drawCard());
+    public void setHand(Card first, Card second) {
+        hand.add(first);
+        hand.add(second);
     }
 
     public void discardHand() {hand = new ArrayList<>();}
 
-    public void hit() {
-        hand.add(shoe.drawCard());
+    public void hit(Card card) {
+        hand.add(card);
     }
 
     public boolean checkForBlackJack(){
         boolean aceFlag = false;
         boolean faceFlag = false;
-        Card.Ranks rank;
+        Card.Rank rank;
         if (hand.size() > 2) {
             return false;
         }
         for(Card card: hand){
             rank = card.getRank();
-            if(rank == Card.Ranks.ACE){
+            if(rank == Card.Rank.ACE){
                 aceFlag = true;
             }
             else if(card.isFace()){

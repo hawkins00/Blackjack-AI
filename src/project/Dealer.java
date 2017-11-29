@@ -5,11 +5,8 @@ package src.project;
  */
 public class Dealer extends Player{
 
-    public Dealer(Shoe shoe) {
-        super(shoe);
+    public Dealer() {
     }
-
-
 
     public Card getInitialHand(){
         return hand.get(0);
@@ -18,7 +15,7 @@ public class Dealer extends Player{
     //Dealer will hit on anything 16 or less
     public void turn(){
         if(checkForTurnCondition()){
-            hit();
+            // TODO: hit();
         }
     }
 

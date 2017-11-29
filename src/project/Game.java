@@ -29,11 +29,11 @@ public class Game {
         shoe = new Shoe();
         shoe.createShoe();
 
-        player = new Player(shoe);
-        player.setHand();
+        player = new Player();
+        player.setHand(shoe.drawCard(), shoe.drawCard());
 
-        dealer = new Dealer(shoe);
-        dealer.setHand();
+        dealer = new Dealer();
+        dealer.setHand(shoe.drawCard(), shoe.drawCard());
         //test for win state on either side, end game immediately if there is one
         if(dealer.checkForBlackJack()) {
             if(player.checkForBlackJack()) {
@@ -72,17 +72,17 @@ public class Game {
 
     //Game actions
     public void hit() {
-        player.hit();
+        // TODO: player.hit();
         //TODO: test for fail state, giving the dealer the win
         if(dealer.checkForTurnCondition()) {
-            dealer.hit();
+            // TODO: dealer.hit();
             //TODO: test for fail state, giving the player the win
         }
     }
 
     public void stand() {
         if(dealer.checkForTurnCondition()) {
-            dealer.hit();
+            // TODO: dealer.hit();
             //TODO: test for fail state, giving the player the win
         } else {
             //TODO: compare hands to determine winner
