@@ -86,6 +86,21 @@ public class Qlearning {
         return rewardTotal / episodes;
     }
 
+    public double randomTest(int episodes) {
+        int action;
+        double rewardTotal = 0.0;
+
+        for (int i = 0; i < episodes; i++) {
+            Game game = new Game();
+            do {
+                action = getAction(0,1.1);
+                rewardTotal += takeAction(action, game);
+            } while (!game.isOver());
+        }
+
+        return rewardTotal / episodes;
+    }
+
     // Private /////////////////////////////////////////////////////////////////
 
     /**
