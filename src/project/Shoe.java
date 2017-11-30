@@ -7,7 +7,7 @@ import java.util.Collections;
  * Created by Zosit on 11/22/2017.
  * This class shall utilize the Card class to create and manipulate a BlackJack deck of cards
  */
-public class Deck {
+public class Shoe {
 
   private ArrayList<Card> shoe;
 
@@ -16,8 +16,8 @@ public class Deck {
 
     // creates 6 decks and shuffles them together before returning the shoe
     for (int i = 0; i < 6; i++) {
-      for (Card.Suits s : Card.Suits.values()) {
-        for (Card.Ranks r : Card.Ranks.values()) {
+      for (Card.Suit s : Card.Suit.values()) {
+        for (Card.Rank r : Card.Rank.values()) {
           newShoe.add(new Card(s, r));
         }
       }

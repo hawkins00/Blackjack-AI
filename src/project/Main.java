@@ -7,15 +7,19 @@ package src.project;
  */
 public class Main {
 
-  public static void main(String[] args) {
-    // This is just to make sure the shoe initialized correctly.  Feel free to comment out/delete.
-    Deck d = new Deck();
-    d.createShoe();
-    System.out.println("Size of shoe: " + d.getShoeSize());
+    public static void main(String[] args) {
+        Qlearning algorithm = new Qlearning();
 
-    while (d.getShoeSize() != 0) {
-      Card c = d.drawCard();
-      System.out.println(c.getRank() + " " + c.getSuit() + " " + c.getValue());
+        algorithm.train(100000, 0.2, 0.0005, 1, 0.1, 0.01, 1000);
+
+        double winningQ = algorithm.test(10000);
+        double winningR = algorithm.randomTest(10000);
+
+        System.out.println("----- Wins -----");
+        System.out.println("Qlearn    Random");
+        System.out.printf("%5.2f%%    %5.2f%% %n%n", winningQ*100, winningR*100);
+
+        algorithm.prettyPrintQ(false);
+        algorithm.prettyPrintQ(true);
     }
-  }
 }

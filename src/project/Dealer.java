@@ -1,30 +1,18 @@
 package src.project;
 
-import java.util.ArrayList;
-
 /**
  * Created by scottjones on 11/26/17.
  */
 public class Dealer extends Player{
 
-    public Dealer(Deck deck) {
-        super(deck);
+    public Dealer() {
     }
 
-
-
-    public Card getInitialHand(){
+    public Card getFirstCard(){
         return hand.get(0);
     }
 
-    //Dealer will hit on anything 16 or less
-    public void turn(){
-        if(checkForTurnCondition()){
-            hit();
-        }
-    }
-
-    public boolean checkForTurnCondition() {
+    public boolean shouldHit() {
         int pointTotal = 0;
         for (Card card: hand){
             pointTotal += card.getValue();

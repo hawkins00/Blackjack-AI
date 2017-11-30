@@ -1,72 +1,59 @@
 package src.project;
 
-import java.util.Comparator;
-
 /**
  * Created by Zosit on 11/22/2017.
  * This class acts as a card in a typical BlackJack deck
  */
 public class Card implements Comparable<Card> {
 
-    public enum Suits {
+    public enum Suit {
         DIAMONDS, HEARTS, SPADES, CLUBS
     }
 
-    public enum Ranks {
-        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-    }
+    public enum Rank {
+        ACE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7),
+        EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10);
 
-    private Suits suit;
-    private Ranks rank;
-    private int value;
+        private final int value;
 
-    //constructor
-    public Card(Suits newSuit, Ranks newRank) {
-        this.suit = newSuit;
-        this.rank = newRank;
+        Rank(int value) {
+            this.value = value;
+        }
 
-        // This whole mess assigns a value to its corresponding rank.
-        // I assign a value of 1 to aces; we should check in the game class whether they should be 1 or 11.
-        if (this.rank == Ranks.ACE) {
-            this.value = 1;
-        } else if (this.rank == Ranks.TWO) {
-            this.value = 2;
-        } else if (this.rank == Ranks.THREE) {
-            this.value = 3;
-        } else if (this.rank == Ranks.FOUR) {
-            this.value = 4;
-        } else if (this.rank == Ranks.FIVE) {
-            this.value = 5;
-        } else if (this.rank == Ranks.SIX) {
-            this.value = 6;
-        } else if (this.rank == Ranks.SEVEN) {
-            this.value = 7;
-        } else if (this.rank == Ranks.EIGHT) {
-            this.value = 8;
-        } else if (this.rank == Ranks.NINE) {
-            this.value = 9;
-        } else {
-            this.value = 10;
+        public int getValue() {
+            return value;
         }
     }
 
-    public boolean isFace() {
-        return rank == Ranks.TEN || rank == Ranks.JACK || rank == Ranks.QUEEN || rank == Ranks.ACE;
+    private Suit suit;
+    private Rank rank;
+
+    public Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
-    public Suits getSuit() {
+    public boolean isFace() {
+        return rank == Rank.TEN || rank == Rank.JACK || rank == Rank.QUEEN || rank == Rank.KING;
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
+    public Suit getSuit() {
         return this.suit;
     }
 
-    public Ranks getRank() {
+    public Rank getRank() {
         return this.rank;
     }
 
     public int getValue() {
-        return this.value;
+        return this.rank.getValue();
     }
 
     public int compareTo(Card card2) {
-        return this.value - card2.value;
+        return this.rank.getValue() - card2.rank.getValue();
     }
 }
