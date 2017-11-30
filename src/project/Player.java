@@ -24,6 +24,17 @@ public class Player {
         for (Card c : hand) {
             total += c.getValue();
         }
+        if (hasAce() && total <= 11) {
+            total += 10;
+        }
+        return total;
+    }
+
+    public int getHandMinValue() {
+        int total = 0;
+        for (Card c : hand) {
+            total += c.getValue();
+        }
         return total;
     }
 

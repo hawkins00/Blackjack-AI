@@ -65,6 +65,8 @@ public class Game {
 
     public int getPlayerHandValue() { return player.getHandValue(); }
 
+    public int getPlayerHandMinValue() { return player.getHandMinValue(); }
+
     public boolean playerHasAce() { return player.hasAce(); }
 
     public ArrayList<Card> getDealerHand() {
