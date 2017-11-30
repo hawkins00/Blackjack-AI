@@ -1,7 +1,5 @@
 package src.project;
 
-import java.util.Arrays;
-
 /**
  * Created by Zosit on 11/22/2017.
  * This class should just run the Qlearning algorithm
