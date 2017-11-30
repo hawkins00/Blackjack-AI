@@ -38,20 +38,22 @@ public class Qlearning {
             epsilonEvery >= episodes || epsilonMin > epsilon || episodes <= 0 || epsilonEvery < 1) {
             throw new IllegalArgumentException("Illegal argument(s) passed to Qlearning.train()");
         }
+        int plotEvery = episodes > 50 ? episodes / 50 : episodes;
         int state;
         int stateNew;
         int action;
         int reward;
 
+        System.out.printf("%nLearning Q-style    .    .    .    .    .%9d %n", episodes);
+
         for (int i = 0; i < episodes; i++) { // train for #episodes
-            System.out.println(i);
             Game game = new Game();
-            state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
+            state = getState(game);
 
             do {
                 action = getAction(state, epsilon);
                 reward = takeAction(action, game);
-                stateNew = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
+                stateNew = getState(game);
                 q[state][action] += eta * (reward + gamma * getActionMaxValue(stateNew) - q[state][action]);
                 state = stateNew;
             } while (!game.isOver());
@@ -65,7 +67,12 @@ public class Qlearning {
                     epsilon = epsilonMin;
                 }
             }
+
+            if ((i+1) % plotEvery == 0) {
+                System.out.print('>');
+            }
         }
+        System.out.println("\n");
     }
 
     /**
@@ -79,20 +86,24 @@ public class Qlearning {
         }
         int state;
         int action;
-        double rewardTotal = 0.0;
+        int wins = 0;
+        int pushes = 0;
 
         for (int i = 0; i < episodes; i++) {
             Game game = new Game();
-            state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
+            state = getState(game);
 
             do {
                 action = getActionMax(state);
-                rewardTotal += takeAction(action, game);
-                state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
+                takeAction(action, game);
+                state = getState(game);
             } while (!game.isOver());
+            if (game.getScore() > 0) {
+                wins++;
+            }
         }
 
-        return rewardTotal / episodes;
+        return wins / (double)episodes;
     }
 
     /**
@@ -105,16 +116,57 @@ public class Qlearning {
             throw new IllegalArgumentException("Illegal argument passed to Qlearning.randomTest()");
         }
 
-        double rewardTotal = 0.0;
+        int wins = 0;
 
         for (int i = 0; i < episodes; i++) {
             Game game = new Game();
+
             do {
-                rewardTotal += takeAction(getActionRandom(), game);
+                takeAction(getActionRandom(), game);
             } while (!game.isOver());
+
+            if (game.getScore() > 0) {
+                wins++;
+            }
         }
 
-        return rewardTotal / episodes;
+        return wins / (double)episodes;
+    }
+
+    /**
+     * Get the Q table.
+     * @return The Q table.
+     */
+    public double[][] getQ() {
+        return q;
+    }
+
+    /**
+     * Pretty Print the Q table.
+     */
+    public void prettyPrintQ(boolean printValues) {
+        double stand;
+        double hit;
+
+        System.out.println(" Player    Dealer    Stand    Hit");
+        System.out.println("----------------------------------");
+
+        for (int i = 0; i < Qlearning.STATES; i++) {
+            stand = this.q[i][0];
+            hit = this.q[i][1];
+            if (stand != 0.0 && hit != 0.0) {
+                if (printValues) {
+                    System.out.printf("%9s %11.2f %7.2f %n", unGetState(i), stand, hit);
+                } else {
+                    if (stand > hit) {
+                        System.out.printf("%9s %9s %7s %n", unGetState(i), "X", "-");
+                    } else {
+                        System.out.printf("%9s %9s %7s %n", unGetState(i), "-", "X");
+                    }
+                }
+            }
+        }
+
     }
 
     // Private /////////////////////////////////////////////////////////////////
@@ -124,18 +176,30 @@ public class Qlearning {
      * State value = 1 bit for player has Ace/no Ace
      *             + 5 bits for player hand value
      *             + 4 bits for dealer exposed card value
-     * @param playerValue The player's minimum total hand (Ace = 1).
-     * @param playerHasAce If the player has at least one Ace in hand.
-     * @param dealerValue The value of the dealer's exposed card.
+     * @param game The current game.
      * @return The current state.
      */
-    private int getState(int playerValue, boolean playerHasAce, int dealerValue) {
-        int state = 16 * playerValue + dealerValue;
-        if (playerHasAce) {
+    private int getState(Game game) {
+        int state = 16 * game.getPlayerHandMinValue() + game.getDealerUpCardValue();
+        if (game.playerHasAce()) {
             state += 512;
         }
 
         return state;
+    }
+
+    /**
+     * Get card information from a provided state.
+     * @param state The state to unget.
+     * @return the card info. available from the state.
+     */
+    private String unGetState(int state) {
+        int dealer = state % 16;
+        state /= 16;
+        int player = state % 32;
+        boolean hasAce = state / 32 == 1;
+
+        return String.format("%2d %s   %2d", player, hasAce? "w/ Ace" : "no Ace", dealer);
     }
 
     /**
@@ -158,7 +222,7 @@ public class Qlearning {
      * @return The best action to take.
      */
     private int getActionMax(int state) {
-        return this.q[state][0] > this.q[state][1] ? 0 : 1;
+        return this.q[state][0] >= this.q[state][1] ? 0 : 1;
     }
 
     /**
@@ -175,7 +239,7 @@ public class Qlearning {
      * @return The best action value.
      */
     private double getActionMaxValue(int state) {
-        return this.q[state][getActionMax(state)];
+        return state > Qlearning.STATES ? -1 : this.q[state][getActionMax(state)];
     }
 
     /**
