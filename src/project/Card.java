@@ -28,14 +28,17 @@ public class Card implements Comparable<Card> {
     private Suit suit;
     private Rank rank;
 
-    //constructor
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
     }
 
     public boolean isFace() {
-        return rank == Rank.TEN || rank == Rank.JACK || rank == Rank.QUEEN || rank == Rank.ACE;
+        return rank == Rank.TEN || rank == Rank.JACK || rank == Rank.QUEEN || rank == Rank.KING;
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 
     public Suit getSuit() {
