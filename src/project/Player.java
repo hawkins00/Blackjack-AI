@@ -61,11 +61,7 @@ public class Player {
     }
 
     public boolean has21() {
-        int total = 0;
-        for (Card c : hand) {
-            total += c.getValue();
-        }
-        return total == 21;
+        return getHandValue() == 21;
     }
 
     public boolean hasBlackjack() {
