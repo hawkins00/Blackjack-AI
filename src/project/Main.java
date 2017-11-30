@@ -1,5 +1,7 @@
 package src.project;
 
+import java.util.Arrays;
+
 /**
  * Created by Zosit on 11/22/2017.
  * This class should just run the Qlearning algorithm
@@ -12,10 +14,14 @@ public class Main {
 
         //algorithm.randomTest(10);
 
-        algorithm.train(100, 0.5, 0.5, 0.5, 0.0, 0.1, 50);
+        algorithm.train(10000, 0.2, 0.9, 1, 0.1, 0.01, 100);
 
-        // output Q matrix?
+        double winningQ = algorithm.test(10000);
+        double winningR = algorithm.randomTest(10000);
 
-        algorithm.test(10);
+        System.out.println("Qlearn   Random");
+        System.out.printf("%5.2f%%   %5.2f%% %n%n", winningQ*100, winningR*100);
+
+        algorithm.prettyPrintQ(false);
     }
 }
