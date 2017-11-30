@@ -8,18 +8,11 @@ public class Dealer extends Player{
     public Dealer() {
     }
 
-    public Card getInitialHand(){
+    public Card getFirstCard(){
         return hand.get(0);
     }
 
-    //Dealer will hit on anything 16 or less
-    public void turn(){
-        if(checkForTurnCondition()){
-            // TODO: hit();
-        }
-    }
-
-    public boolean checkForTurnCondition() {
+    public boolean shouldHit() {
         int pointTotal = 0;
         for (Card card: hand){
             pointTotal += card.getValue();
