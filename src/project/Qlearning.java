@@ -46,12 +46,12 @@ public class Qlearning {
         for (int i = 0; i < episodes; i++) { // train for #episodes
             System.out.println(i);
             Game game = new Game();
-            state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+            state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
 
             do {
                 action = getAction(state, epsilon);
                 reward = takeAction(action, game);
-                stateNew = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+                stateNew = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
                 q[state][action] += eta * (reward + gamma * getActionMaxValue(stateNew) - q[state][action]);
                 state = stateNew;
             } while (!game.isOver());
@@ -83,12 +83,12 @@ public class Qlearning {
 
         for (int i = 0; i < episodes; i++) {
             Game game = new Game();
-            state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+            state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
 
             do {
                 action = getActionMax(state);
                 rewardTotal += takeAction(action, game);
-                state = getState(game.getPlayerHandValue(), game.isAceInPlayerHand(), game.getDealerUpCardValue());
+                state = getState(game.getPlayerHandValue(), game.playerHasAce(), game.getDealerUpCardValue());
             } while (!game.isOver());
         }
 
@@ -186,9 +186,9 @@ public class Qlearning {
      */
     private int takeAction(int action, Game game) {
         if (action == 0) {
-            game.stand();
+            game.playerStand();
         } else {
-            game.hit();
+            game.playerHit();
         }
 
         return game.getScore();

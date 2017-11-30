@@ -8,30 +8,31 @@ import java.util.ArrayList;
  * They should be able to use a Shoe class to draw and discard cards from their hand.
  */
 public class Player {
-    public ArrayList<Card> hand;
+
+    ArrayList<Card> hand;
 
     public Player() {
         hand = new ArrayList<>();
     }
 
-    public ArrayList<Card> getHand() {return hand;}
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 
     public int getHandValue() {
         int total = 0;
-        for (Card card: this.hand) {
-            total += card.getValue();
+        for (Card c : hand) {
+            total += c.getValue();
         }
-
         return total;
     }
 
-    public boolean isAceInHand() {
-        for (Card card: this.hand) {
-            if (card.getValue() == 1) {
+    public boolean hasAce() {
+        for (Card c : hand) {
+            if (c.isAce()) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -40,32 +41,25 @@ public class Player {
         hand.add(second);
     }
 
-    public void discardHand() {hand = new ArrayList<>();}
+    public void discardHand() {
+        hand = new ArrayList<>();
+    }
 
     public void hit(Card card) {
         hand.add(card);
     }
 
-    public boolean checkForBlackJack(){
-        boolean aceFlag = false;
-        boolean faceFlag = false;
-        Card.Rank rank;
-        if (hand.size() > 2) {
-            return false;
+    public boolean has21() {
+        int total = 0;
+        for (Card c : hand) {
+            total += c.getValue();
         }
-        for(Card card: hand){
-            rank = card.getRank();
-            if(rank == Card.Rank.ACE){
-                aceFlag = true;
-            }
-            else if(card.isFace()){
-                faceFlag = true;
-            }
-        }
-        if(aceFlag && faceFlag) {
-            return true;
-        }
+        return total == 21;
+    }
 
-        return false;
+    public boolean hasBlackjack() {
+        return hand.size() == 2 &&
+                ((hand.get(0).isFace() && hand.get(1).isAce()) ||
+                        (hand.get(0).isAce() && hand.get(1).isFace()));
     }
 }
