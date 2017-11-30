@@ -33,8 +33,8 @@ public class Qlearning {
      * @param epsilonEvery Number of episodes to train before reducing epsilon by epsilonDelta
      */
     public void train(int episodes, double eta, double gamma, double epsilon, double epsilonMin, double epsilonDelta, int epsilonEvery) throws IllegalArgumentException {
-        if (eta <= 0.0 || gamma <= 0.0 || epsilon <= 0.0 || epsilonMin <= 0.0 || epsilonDelta <= 0.0 ||
-            eta >= 1.0 || gamma >= 1.0 || epsilon >= 1.0 || epsilonMin >= 1.0 || epsilonDelta >= 1.0 ||
+        if (eta <= 0.0 || gamma < 0.0 || epsilon < 0.0 || epsilonMin < 0.0 || epsilonDelta < 0.0 ||
+            eta > 1.0  || gamma > 1.0 || epsilon > 1.0 || epsilonMin > 1.0 || epsilonDelta > 1.0 ||
             epsilonEvery >= episodes || epsilonMin > epsilon || episodes <= 0 || epsilonEvery < 1) {
             throw new IllegalArgumentException("Illegal argument(s) passed to Qlearning.train()");
         }
