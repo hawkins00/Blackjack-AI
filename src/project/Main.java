@@ -7,15 +7,15 @@ package src.project;
  */
 public class Main {
 
-  public static void main(String[] args) {
-    // This is just to make sure the shoe initialized correctly.  Feel free to comment out/delete.
-    Shoe d = new Shoe();
-    d.createShoe();
-    System.out.println("Size of shoe: " + d.getShoeSize());
+    public static void main(String[] args) {
+        Qlearning algorithm = new Qlearning();
 
-    while (d.getShoeSize() != 0) {
-      Card c = d.drawCard();
-      System.out.println(c.getRank() + " " + c.getSuit() + " " + c.getValue());
+        //algorithm.randomTest(10);
+
+        algorithm.train(100, 0.5, 0.5, 0.5, 0.0, 0.1, 50);
+
+        // output Q matrix?
+
+        algorithm.test(10);
     }
-  }
 }
