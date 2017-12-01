@@ -28,7 +28,7 @@ public class BlackJackGUI extends JPanel
     JLabel playerlabel = new JLabel();
 
     Qlearning qlearning;
-    Game game = new Game();
+    Game game;
 
     private Player player;
     private Dealer dealer;
@@ -53,8 +53,6 @@ public class BlackJackGUI extends JPanel
     public BlackJackGUI (Qlearning qlearning)
     {
         this.qlearning = qlearning;
-        player = game.getPlayer();
-        dealer = game.getDealer();
 
         topPanel.setBackground(new Color(0, 122, 0));
         dcardPanel.setBackground(new Color(0, 122, 0));
@@ -66,7 +64,7 @@ public class BlackJackGUI extends JPanel
         dealbutton.setText("  Deal");
         dealbutton.addActionListener(new dealbutton());
         nextbutton.setText("  Next");
-//        nextbutton.addActionListener(new nextbutton());
+        nextbutton.addActionListener(new nextbutton());
         nextbutton.setEnabled(false);
 //        staybutton.setText("  Stay");
 ////        staybutton.addActionListener(new staybutton());
@@ -93,18 +91,6 @@ public class BlackJackGUI extends JPanel
 
     }//end BlackjackGUI
 
-    //Type here refers to dealer(0) or player(1)
-//    public CardGUI findGui(int type, int index) {
-//        Card temp;
-//
-//        if (type == 0) {
-//            temp = dealer.getCardAt(index);
-////            if (temp.getRank() == Card.Rank.ACE)
-//        }
-//        else {
-//            temp = player.getCardAt(index);
-//        }
-//    }
 
     /*************************************************************
      Shows the screen
@@ -127,6 +113,15 @@ public class BlackJackGUI extends JPanel
      *************************************************************/
     class dealbutton implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+
+            game = new Game();
+            player = game.getPlayer();
+            dealer = game.getDealer();
+
+            winlosebox.setText("");
+
+            dcardPanel.removeAll();
+            pcardPanel.removeAll();
 
             dcardPanel.add(dealerlabel);
             pcardPanel.add(playerlabel);
@@ -182,7 +177,7 @@ public class BlackJackGUI extends JPanel
             {
                 nextbutton.setEnabled(false);
 //                staybutton.setEnabled(false);
-                dealbutton.setEnabled(false);
+                dealbutton.setEnabled(true);
 //                playagainbutton.setEnabled(true);
                 winlosebox.setText("BlackJack");
             }
@@ -190,6 +185,10 @@ public class BlackJackGUI extends JPanel
             add(dcardPanel,BorderLayout.CENTER);
             add(pcardPanel,BorderLayout.SOUTH);
 
+            dcardPanel.repaint();
+            dcardPanel.revalidate();
+            pcardPanel.repaint();
+            pcardPanel.revalidate();
         }
     }//end dealbutton
 
@@ -197,28 +196,107 @@ public class BlackJackGUI extends JPanel
      NextButtonutton
      Continues the A.I. visual play
      *************************************************************/
-//    class nextbutton implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
+    class nextbutton implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            int result = qlearning.testGUI(game);
+
+            if (result == 1) {
+
+                CardGUI hitcard = deckGUI.getCard(player.getLastCard());
+
+                pcardPanel.removeAll();
+                playerlabel.setText("  Player hits, new value:  " + game.getPlayerHandValue());
+                pcardPanel.add(playerlabel);
+
+                for (int x = 0; x < player.getHand().size(); x++) {
+                    playercardhit = new JLabel(deckGUI.getCard(player.getCardAt(x)).getimage());
+                    pcardPanel.add(playercardhit);
+                }
+
+                pcardPanel.repaint();
+                pcardPanel.revalidate();
+
+                if (game.getScore() == -1) {
+                    winlosebox.setText("Bust");
+                    nextbutton.setEnabled(false);
+                    dealbutton.setEnabled(true);
+                    playerlabel.setText("  Player:   " + player.getHandValue());
+                    dealerlabel.setText(" Dealer:   " + dealer.getHandValue());
+                }
+
+            }
+
+            else {
+                playerlabel.setText("  Player stays at:   " + player.getHandValue());
+                dcardPanel.removeAll();
+
+                dcardPanel.add(dealerlabel);
+                dealerlabel.setText(" Dealer ends with:   " + dealer.getHandValue());
+
+                for (int x = 0; x < dealer.getHand().size(); x++) {
+                    dealercard1 = new JLabel(deckGUI.getCard(dealer.getCardAt(x)).getimage());
+                    dcardPanel.add(dealercard1);
+                }
+
+                dcardPanel.repaint();
+                dcardPanel.revalidate();
+
+                if (dealer.getHandValue() > 21) {
+                    winlosebox.setText("Dealer busts");
+                }
+                else if (game.getScore() == -1) {
+                    winlosebox.setText("Dealer wins");
+                }
+                else if (game.getScore() == 0) {
+                    winlosebox.setText("DRAW");
+                }
+                else {
+                    winlosebox.setText("Dealer loses");
+                }
+                nextbutton.setEnabled(false);
+                dealbutton.setEnabled(true);
+
+//                for (int x = 0; x < 2; x++) {
+//                    cardGUI = deckGUI.getCard(dealer.getCardAt(x));
+//                    if (x == 1) {
+//                        dealercard1 = new JLabel(cardGUI.getimage());
+//                    }
+//                    else {
+//                        dealercard2 = new JLabel(cardGUI.getimage());
+//                    }
+//                }
+
+//                dcardPanel.remove(dealercard0);
+//                dcardPanel.add(dealercard1);
 //
+//            dealer = game.dealerPlays();
+//            dcardPanel.removeAll();
+//            dcardPanel.add(dealerlabel);
+//            dealerlabel.setText(" " + dealerlabel.getText());
 //
-//            CardGUI hitcard = game.hit(player);
-//            playercardhit = new JLabel(hitcard.getimage());
-//            pcardPanel.add(playercardhit);
-//            pcardPanel.repaint();
-//
-//            if(game.bust(player))
+//            //iterate through cards and re-display
+//            CardGUI dhitcard = null;
+//            Iterator<CardGUI> scan = (dealer.inHand).iterator();
+//            while (scan.hasNext())
 //            {
-//                winlosebox.setText("Bust");
-//                nextbutton.setEnabled(false);
-//                dealbutton.setEnabled(false);
-////                staybutton.setEnabled(false);
-////                playagainbutton.setEnabled(true);
+//                dhitcard = scan.next();
+//                dealercardhit = new JLabel(dhitcard.getimage());
+//                dcardPanel.add(dealercardhit);
 //            }
 //
-//            playerlabel.setText("  Player:   " + game.handValue(player));
+//            dealerlabel.setText("Dealer: " + game.handValue(dealer));
+//            playerlabel.setText("Player: " + game.handValue(player));
 //
-//        }
-//    }//end nextbutton
+//            winlosebox.setText(game.winner());
+//            nextbutton.setEnabled(false);
+//            staybutton.setEnabled(false);
+//
+//            playagainbutton.setEnabled(true);
+            }
+
+        }
+    }//end nextbutton
 
     /*************************************************************
      StayButton

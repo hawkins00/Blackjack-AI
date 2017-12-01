@@ -266,23 +266,18 @@ public class Qlearning {
     }
 
     /**
-     * Test for #episodes. Return win %.
+     * Designed for a single hit/stay action decision in the GUI. Return win or lose.
      * @return If the A.I. won the game or not.
      */
-    public boolean testGUI(Game game) {
+    public int testGUI(Game game) {
         int state;
         int action;
-        boolean win = false;
 
         state = getState(game);
 
         action = getActionMax(state);
         takeAction(action, game);
 
-        if (game.getScore() > 0) {
-            win = true;
-        }
-
-        return win;
+        return action;
     }
 }

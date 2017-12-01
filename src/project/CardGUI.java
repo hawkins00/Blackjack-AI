@@ -92,7 +92,7 @@ import javax.swing.*;
          ***********************************************************/
         public String toString()
         {
-            return "Face: "+ face + " Suit"+ suit +" Value: "+ value;
+            return "Face: "+ face + " Suit "+ suit +" Value: "+ value;
         }
 
     }//end Card

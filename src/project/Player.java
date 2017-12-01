@@ -73,4 +73,6 @@ public class Player {
     public Card getCardAt (int index) {
         return hand.get(index);
     }
+
+    public Card getLastCard () {return hand.get(hand.size() - 1);}
 }

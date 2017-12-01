@@ -94,7 +94,7 @@ public class DeckGUI
         ImageIcon card5 = new ImageIcon(this.getClass().getResource("graphics/6d.jpg"));
         CardGUI sixd = new CardGUI(card5, 6, "diamond", "Six");
         ImageIcon card41 = new ImageIcon(this.getClass().getResource("graphics/7d.jpg"));
-        CardGUI sevend = new CardGUI(card41, 7,"diamond", "Seven ");
+        CardGUI sevend = new CardGUI(card41, 7,"diamond", "Seven");
         ImageIcon card14 = new ImageIcon(this.getClass().getResource("graphics/8d.jpg"));
         CardGUI eightd = new CardGUI(card14, 8, "diamond", "Eight");
         ImageIcon card16 = new ImageIcon(this.getClass().getResource("graphics/9d.jpg"));
@@ -255,6 +255,9 @@ public class DeckGUI
                 }
             }
         }
+
+        if (true)
+            myFace = null;
 
         return null;
     }
