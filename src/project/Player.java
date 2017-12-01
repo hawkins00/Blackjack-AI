@@ -69,4 +69,8 @@ public class Player {
                 ((hand.get(0).isFace() && hand.get(1).isAce()) ||
                         (hand.get(0).isAce() && hand.get(1).isFace()));
     }
+
+    public Card getCardAt (int index) {
+        return hand.get(index);
+    }
 }

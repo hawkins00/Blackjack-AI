@@ -264,4 +264,25 @@ public class Qlearning {
 
         return game.getScore();
     }
+
+    /**
+     * Test for #episodes. Return win %.
+     * @return If the A.I. won the game or not.
+     */
+    public boolean testGUI(Game game) {
+        int state;
+        int action;
+        boolean win = false;
+
+        state = getState(game);
+
+        action = getActionMax(state);
+        takeAction(action, game);
+
+        if (game.getScore() > 0) {
+            win = true;
+        }
+
+        return win;
+    }
 }

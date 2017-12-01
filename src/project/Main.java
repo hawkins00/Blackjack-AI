@@ -21,5 +21,10 @@ public class Main {
 
         algorithm.prettyPrintQ(false);
         algorithm.prettyPrintQ(true);
+
+        BlackJackGUI blackJackGUI = new BlackJackGUI(algorithm);
+
+        blackJackGUI.display();
+
     }
 }

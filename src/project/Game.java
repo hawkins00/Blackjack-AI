@@ -110,4 +110,12 @@ public class Game {
             }
         }
     }
+
+    public boolean blackjack() {
+        return player.hasBlackjack() && dealer.hasBlackjack();
+    }
+
+    public Dealer getDealer() {return dealer;}
+
+    public Player getPlayer() {return player;}
 }
