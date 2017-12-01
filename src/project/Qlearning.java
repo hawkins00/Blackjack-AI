@@ -12,11 +12,11 @@ public class Qlearning {
 
     private double[][] q;
     private static int ACTIONS = 2; // [0] = stand, [1] = hit
-    private static int STATES  = 858 + 1; // 858 = largest legal state # possible
-                                          //       Ace 21 10 [in decimal] = 1 10101 1010 [in binary]);
+    private static int STATES  = 698 + 1; // 698 = largest legal state # possible
+                                          //       21 Ace 10 [in decimal] = 10101 1 1010 [in binary]);
 
     /**
-     * Qlearning constuctor
+     * Qlearning constructor
      */
     public Qlearning() {
         this.q = new double[Qlearning.STATES][Qlearning.ACTIONS];
@@ -148,14 +148,14 @@ public class Qlearning {
         double stand;
         double hit;
 
-        System.out.println("Player -- Dealer -- Stand -- Hit");
+        System.out.println("Player -- Dealer -- Stand -- Hit -");
 
         for (int i = 0; i < Qlearning.STATES; i++) {
             stand = this.q[i][0];
             hit = this.q[i][1];
             if (stand != 0.0 && hit != 0.0) {
                 if (printValues) {
-                    System.out.printf("%10s %10.2f %7.2f %n", unGetState(i), stand, hit);
+                    System.out.printf("%10s %10.3f %8.3f %n", unGetState(i), stand, hit);
                 } else {
                     if (stand > hit) {
                         System.out.printf("%10s %8s %7s %n", unGetState(i), "X", "-");
@@ -172,16 +172,17 @@ public class Qlearning {
 
     /**
      * Get the current state.
-     * State value = 1 bit for player has Ace/no Ace
-     *             + 5 bits for player hand value
+     * State value = 5 bits for player hand value
+     *             + 1 bit for player has Ace/no Ace
      *             + 4 bits for dealer exposed card value
      * @param game The current game.
      * @return The current state.
      */
     private int getState(Game game) {
-        int state = 16 * game.getPlayerHandMinValue() + game.getDealerUpCardValue();
+        int state = game.getDealerUpCardValue();
+        state += (game.getPlayerHandMinValue() << 5);
         if (game.playerHasAce()) {
-            state += 512;
+            state += 16;
         }
 
         return state;
@@ -194,9 +195,9 @@ public class Qlearning {
      */
     private String unGetState(int state) {
         int dealer = state % 16;
-        state /= 16;
-        int player = state % 32;
-        boolean hasAce = state / 32 == 1;
+        state >>= 4;
+        boolean hasAce = state % 2 == 1;
+        int player = state >> 1;
 
         return String.format("%2d %s %8d", player, hasAce? "+A" : "-A", dealer);
     }
