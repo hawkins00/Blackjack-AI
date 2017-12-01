@@ -1,7 +1,10 @@
 package src.project;
 //************************************************************
+//  This code was adapted by Josh Sander from:
+//  http://faculty.washington.edu/moishe/javademos/blackjack/
 //
-//  BlackJackGUI.java       Authors: Lewis, Chase, Coleman
+//
+//  with original authors:       Authors: Lewis, Chase, Coleman
 //
 //  Provides a graphical user interface for a blackjack game
 //  using the BlackJack class to provide the functionality
@@ -22,8 +25,6 @@ public class BlackJackGUI extends JPanel
     JTextPane winlosebox = new JTextPane();
     JButton nextbutton = new JButton();
     JButton dealbutton = new JButton();
-//    JButton staybutton = new JButton();
-//    JButton playagainbutton = new JButton();
     JLabel dealerlabel = new JLabel();
     JLabel playerlabel = new JLabel();
 
@@ -32,8 +33,6 @@ public class BlackJackGUI extends JPanel
 
     private Player player;
     private Dealer dealer;
-//    private ArrayList<CardGUI> dscan = new ArrayList<>();
-//    private ArrayList<CardGUI> pscan = new ArrayList<>();
     DeckGUI deckGUI = new DeckGUI();
 
     /*************************************************************
@@ -66,12 +65,6 @@ public class BlackJackGUI extends JPanel
         nextbutton.setText("  Next");
         nextbutton.addActionListener(new nextbutton());
         nextbutton.setEnabled(false);
-//        staybutton.setText("  Stay");
-////        staybutton.addActionListener(new staybutton());
-//        staybutton.setEnabled(false);
-//        playagainbutton.setText("  Play Again");
-////        playagainbutton.addActionListener(new playagainbutton());
-//        playagainbutton.setEnabled(false);
 
         dealerlabel.setText("  Dealer:  ");
         playerlabel.setText("  Player:  ");
@@ -79,8 +72,6 @@ public class BlackJackGUI extends JPanel
         topPanel.add(winlosebox);
         topPanel.add(dealbutton);
         topPanel.add(nextbutton);
-//        topPanel.add(staybutton);
-//        topPanel.add(playagainbutton);
         pcardPanel.add(playerlabel);
         dcardPanel.add(dealerlabel);
 
@@ -170,15 +161,12 @@ public class BlackJackGUI extends JPanel
             playerlabel.setText("  Player:  " + game.getPlayerHandValue());
 
             nextbutton.setEnabled(true);
-//            staybutton.setEnabled(true);
             dealbutton.setEnabled(false);
 
             if(game.blackjack())
             {
                 nextbutton.setEnabled(false);
-//                staybutton.setEnabled(false);
                 dealbutton.setEnabled(true);
-//                playagainbutton.setEnabled(true);
                 winlosebox.setText("BlackJack");
             }
 
@@ -256,111 +244,8 @@ public class BlackJackGUI extends JPanel
                 }
                 nextbutton.setEnabled(false);
                 dealbutton.setEnabled(true);
-
-//                for (int x = 0; x < 2; x++) {
-//                    cardGUI = deckGUI.getCard(dealer.getCardAt(x));
-//                    if (x == 1) {
-//                        dealercard1 = new JLabel(cardGUI.getimage());
-//                    }
-//                    else {
-//                        dealercard2 = new JLabel(cardGUI.getimage());
-//                    }
-//                }
-
-//                dcardPanel.remove(dealercard0);
-//                dcardPanel.add(dealercard1);
-//
-//            dealer = game.dealerPlays();
-//            dcardPanel.removeAll();
-//            dcardPanel.add(dealerlabel);
-//            dealerlabel.setText(" " + dealerlabel.getText());
-//
-//            //iterate through cards and re-display
-//            CardGUI dhitcard = null;
-//            Iterator<CardGUI> scan = (dealer.inHand).iterator();
-//            while (scan.hasNext())
-//            {
-//                dhitcard = scan.next();
-//                dealercardhit = new JLabel(dhitcard.getimage());
-//                dcardPanel.add(dealercardhit);
-//            }
-//
-//            dealerlabel.setText("Dealer: " + game.handValue(dealer));
-//            playerlabel.setText("Player: " + game.handValue(player));
-//
-//            winlosebox.setText(game.winner());
-//            nextbutton.setEnabled(false);
-//            staybutton.setEnabled(false);
-//
-//            playagainbutton.setEnabled(true);
             }
-
         }
     }//end nextbutton
 
-    /*************************************************************
-     StayButton
-     dealer must hit on 16 or lower. determines the winner,
-     player wins if under 21 and above dealer.
-     Tie goes to dealer.
-     @param e Stay button pressed
-     *************************************************************/
-//    class staybutton implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//
-//            dcardPanel.remove(dealercard0);
-//            dcardPanel.add(dealercard1);
-//
-//            dealer = game.dealerPlays();
-//            dcardPanel.removeAll();
-//            dcardPanel.add(dealerlabel);
-//            dealerlabel.setText(" " + dealerlabel.getText());
-//
-//            //iterate through cards and re-display
-//            CardGUI dhitcard = null;
-//            Iterator<CardGUI> scan = (dealer.inHand).iterator();
-//            while (scan.hasNext())
-//            {
-//                dhitcard = scan.next();
-//                dealercardhit = new JLabel(dhitcard.getimage());
-//                dcardPanel.add(dealercardhit);
-//            }
-//
-//            dealerlabel.setText("Dealer: " + game.handValue(dealer));
-//            playerlabel.setText("Player: " + game.handValue(player));
-//
-//            winlosebox.setText(game.winner());
-//            nextbutton.setEnabled(false);
-//            staybutton.setEnabled(false);
-//
-//            playagainbutton.setEnabled(true);
-//
-//        }
-//    }//end staybutton
-
-    /*************************************************************
-     PlayAgainButton
-     resets screen
-     @param e Play Again button pressed
-     *************************************************************/
-//    class playagainbutton implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//
-//            dealerlabel.setText("Dealer: ");
-//            playerlabel.setText("Player: ");
-//            winlosebox.setText("");
-//            dealer = new Hand();
-//            player = new Hand();
-//            game=new Blackjack(dealer, player);
-//
-//            dcardPanel.removeAll();
-//            pcardPanel.removeAll();
-//
-//            nextbutton.setEnabled(false);
-//            staybutton.setEnabled(false);
-//            playagainbutton.setEnabled(false);
-//            dealbutton.setEnabled(true);
-//
-//        }
-//    }//end playagainbutton
 }//end BlackjackGUI

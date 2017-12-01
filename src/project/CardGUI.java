@@ -2,7 +2,10 @@ package src.project;
 
     //************************************************************
 //
-//  Card.java             Authors:  Lewis, Chase, Coleman
+//  Code adapted by Joshua Sander from
+//  http://faculty.washington.edu/moishe/javademos/blackjack/
+//
+//  with original authors             Authors:  Lewis, Chase, Coleman
 //
 //  Provides an implementation of a class to represent a
 //  playing card

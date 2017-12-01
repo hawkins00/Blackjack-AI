@@ -2,7 +2,10 @@ package src.project;
 
 //************************************************************
 //
-//  DeckGUI.Java             Authors:  Lewis, Chase, Coleman
+//  This code was adapted by Joshua Sander from:
+//  http://faculty.washington.edu/moishe/javademos/blackjack/
+//
+//  with original authors             Authors:  Lewis, Chase, Coleman
 //
 //  Provides an implementation of a deck of cards using a
 //  set to represent the cards
@@ -256,23 +259,8 @@ public class DeckGUI
             }
         }
 
-        if (true)
-            myFace = null;
-
         return null;
     }
-
-
-    /**********************************************************
-     returns a single random CardGUI from the deck
-     **********************************************************/
-//    public CardGUI getCardGUI()
-//    {
-//        CardGUI result = new CardGUI();
-//        result = deckSet.removeRandom();
-//
-//        return result;
-//    }
 
 }//end deck
 
