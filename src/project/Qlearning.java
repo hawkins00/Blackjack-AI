@@ -154,13 +154,16 @@ public class Qlearning {
             stand = this.q[i][0];
             hit = this.q[i][1];
             if (stand != 0.0 && hit != 0.0) {
+                if (i % 16 == 1) {
+                    System.out.println();
+                }
                 if (printValues) {
-                    System.out.printf("%10s %10.3f %8.3f %n", unGetState(i), stand, hit);
+                    System.out.printf("%10s %8.3f %8.3f %n", unGetState(i), stand, hit);
                 } else {
                     if (stand > hit) {
-                        System.out.printf("%10s %8s %7s %n", unGetState(i), "X", "-");
+                        System.out.printf("%10s %6s %7s %n", unGetState(i), "X", "-");
                     } else {
-                        System.out.printf("%10s %8s %7s %n", unGetState(i), "-", "X");
+                        System.out.printf("%10s %6s %7s %n", unGetState(i), "-", "X");
                     }
                 }
             }
@@ -199,7 +202,16 @@ public class Qlearning {
         boolean hasAce = state % 2 == 1;
         int player = state >> 1;
 
-        return String.format("%2d %s %8d", player, hasAce? "+A" : "-A", dealer);
+        String dealerOut;
+        if (dealer == 1) {
+            dealerOut = "Ace";
+        } else if (dealer == 10) {
+            dealerOut = "Face";
+        } else {
+            dealerOut = Integer.toString(dealer);
+        }
+
+        return String.format("%2d%s %9s", player, hasAce? "+Ace" : "-Ace", dealerOut);
     }
 
     /**
