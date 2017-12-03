@@ -77,12 +77,11 @@ public class Qlearning {
     }
 
     /**
-     * Test for #episodes. Return win %.
+     * Test for #episodes. Return win %'s.
      * @param episodes Number of episodes (games) to play
-     * @param discardPushes If pushes should be discarded (only wins vs losses)
-     * @return The win percentage.
+     * @return The win percentages as array of 2 doubles [w/o pushes, w/ pushes].
      */
-    public double[] test(int episodes, boolean discardPushes) {
+    public double[] test(int episodes) {
         if (episodes < 1) {
             throw new IllegalArgumentException("Illegal argument passed to Qlearning.test()");
         }
@@ -113,12 +112,11 @@ public class Qlearning {
     }
 
     /**
-     * Randomly play for #episodes. Return win %.
+     * Randomly play for #episodes. Return win %'s.
      * @param episodes Number of episodes (games) to play.
-     * @param discardPushes If pushes should be discarded (only wins vs losses)
-     * @return The win percentage.
+     * @return The win percentages as array of 2 doubles [w/o pushes, w/ pushes].
      */
-    public double[] randomTest(int episodes, boolean discardPushes) {
+    public double[] randomTest(int episodes) {
         if (episodes < 1) {
             throw new IllegalArgumentException("Illegal argument passed to Qlearning.randomTest()");
         }
