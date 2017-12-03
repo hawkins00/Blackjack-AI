@@ -79,15 +79,18 @@ public class Qlearning {
     /**
      * Test for #episodes. Return win %.
      * @param episodes Number of episodes (games) to play
+     * @param discardPushes If pushes should be discarded (only wins vs losses)
      * @return The win percentage.
      */
-    public double test(int episodes) {
+    public double[] test(int episodes, boolean discardPushes) {
         if (episodes < 1) {
             throw new IllegalArgumentException("Illegal argument passed to Qlearning.test()");
         }
+
         int state;
         int action;
         int wins = 0;
+        int losses = 0;
 
         for (int i = 0; i < episodes; i++) {
             Game game = new Game();
@@ -98,25 +101,30 @@ public class Qlearning {
                 takeAction(action, game);
                 state = getState(game);
             } while (!game.isOver());
+
             if (game.getScore() > 0) {
                 wins++;
+            } else if (game.getScore() < 0) {
+                losses++;
             }
         }
 
-        return wins / (double)episodes;
+        return new double[] {wins / (double) (wins + losses), wins / (double) episodes};
     }
 
     /**
      * Randomly play for #episodes. Return win %.
      * @param episodes Number of episodes (games) to play.
+     * @param discardPushes If pushes should be discarded (only wins vs losses)
      * @return The win percentage.
      */
-    public double randomTest(int episodes) {
+    public double[] randomTest(int episodes, boolean discardPushes) {
         if (episodes < 1) {
             throw new IllegalArgumentException("Illegal argument passed to Qlearning.randomTest()");
         }
 
         int wins = 0;
+        int losses = 0;
 
         for (int i = 0; i < episodes; i++) {
             Game game = new Game();
@@ -127,10 +135,12 @@ public class Qlearning {
 
             if (game.getScore() > 0) {
                 wins++;
+            } else if (game.getScore() < 0) {
+                losses++;
             }
         }
 
-        return wins / (double)episodes;
+        return new double[] {wins / (double) (wins + losses), wins / (double) episodes};
     }
 
     /**
@@ -211,7 +221,7 @@ public class Qlearning {
             dealerOut = Integer.toString(dealer);
         }
 
-        return String.format("%2d%s %9s", player, hasAce? "+Ace" : "-Ace", dealerOut);
+        return String.format("%2d%sAce %9s", player, hasAce? "+" : "-", dealerOut);
     }
 
     /**

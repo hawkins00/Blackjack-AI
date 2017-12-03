@@ -12,12 +12,13 @@ public class Main {
 
         algorithm.train(100000, 0.2, 0.0005, 1, 0.1, 0.01, 1000);
 
-        double winningQ = algorithm.test(10000);
-        double winningR = algorithm.randomTest(10000);
+        double[] winningQ = algorithm.test(10000, true);
+        double[] winningR = algorithm.randomTest(10000, true);
 
         System.out.println("----- Wins -----");
         System.out.println("Qlearn    Random");
-        System.out.printf("%5.2f%%    %5.2f%% %n%n", winningQ*100, winningR*100);
+        System.out.printf("%5.2f%%    %5.2f%% %n", winningQ[0]*100, winningR[0]*100);
+        System.out.printf("%5.2f%%    %5.2f%% (with pushes)%n%n", winningQ[1]*100, winningR[1]*100);
 
         algorithm.prettyPrintQ(false);
         algorithm.prettyPrintQ(true);
