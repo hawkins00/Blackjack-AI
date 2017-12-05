@@ -150,6 +150,38 @@ public class Qlearning {
     }
 
     /**
+     * Get the Q values for states with an Ace.
+     * @return The (sub)Q table.
+     */
+    public double[][] getQAce() {
+        double[][] qA = new double[21+1][10+1];
+        for (int i = 2; i <= 21; i++) {
+            for (int j = 1; j <= 10; j++) {
+                int state = (i << 5) + (1 << 4) + j;
+                qA[i][j] = q[state][0] - q[state][1];
+            }
+        }
+
+        return qA;
+    }
+
+    /**
+     * Get the Q values for states with no Ace.
+     * @return The (sub)Q table.
+     */
+    public double[][] getQNoAce() {
+        double[][] qNA = new double[21+1][10+1];
+        for (int i = 4; i <= 21; i++) {
+            for (int j = 1; j <= 10; j++) {
+                int state = (i << 5) + j;
+                qNA[i][j] = q[state][0] - q[state][1];
+            }
+        }
+
+        return qNA;
+    }
+
+    /**
      * Pretty Print the Q table.
      */
     public void prettyPrintQ(boolean printValues) {
