@@ -13,11 +13,7 @@ public class Dealer extends Player{
     }
 
     public boolean shouldHit() {
-        int pointTotal = 0;
-        for (Card card: hand){
-            pointTotal += card.getValue();
-        }
-        return pointTotal < 17;
+        return getHandValue() < 17;
     }
 
 }
