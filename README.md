@@ -1,8 +1,6 @@
 # Blackjack
 Blackjack A.I. implemented with reinforcement learning
-This program was a group Project for CS541 at Portland State University
-Fall of 2017
-The Group Members are: Joshua Sander, Alex Davis, Matt Hawkins, Scott Jones, Dakota Sanchez, Daniel Corcoran
+This program was a group Project for A.I.
 
 Rules for Our Simple BlackJack Game
 
